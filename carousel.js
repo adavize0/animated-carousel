@@ -5,25 +5,17 @@ const Directions = {
 }
 
 /**
- * Set initial position index on images 
- * Create placeholder positions for each element
- */ 
+ * Set initial index for image positions 
+ */
 document.querySelectorAll('.crs-list').forEach(carousel => {
-    
     const images = carousel.querySelectorAll('.crs-img-wrp');
-    const placeHoldersWrapper = document.createElement('div');
-    placeHoldersWrapper.className = 'crs-place-holders-wrp';
-    placeHoldersWrapper.style.display = 'flex';
 
     images.forEach((img, i) => {
-        img.setAttribute('data-crs-curr-index', i)
-        img.setAttribute('data-crs-org-index', i)
-        placeHoldersWrapper.innerHTML += `<div class="crs-position"> <div class="crs-position__inner"></div></div>`;
+        img.setAttribute('data-crs-curr-index', i);
     })
 
-    carousel.insertAdjacentElement('afterend', placeHoldersWrapper)
+    createPlaceHolders(carousel, images.length);
 })
-
 
 // Add event listener on next and previous buttons
 document.querySelectorAll('.js-crs-ctrl').forEach(btn => {
@@ -39,20 +31,33 @@ document.querySelectorAll('.js-crs-ctrl').forEach(btn => {
     })
 })
 
+/** Create placeholder positions for each element */
+function createPlaceHolders(container, n) {
+    const placeHoldersWrapper = document.createElement('div');
+
+    for (let i = 0; i < n; i++) {
+        placeHoldersWrapper.innerHTML += `<div class="crs-position"> <div class="crs-position__inner"></div></div>`;
+    }
+
+    placeHoldersWrapper.className = 'crs-place-holders-wrp';
+    container.insertAdjacentElement('afterend', placeHoldersWrapper)
+}
+
+function arrangePlaceHolders(){
+    
+}
 
 /**
  * Determine the direction;
- * Calculate new positions of images;
- * Calculate new scale of images;
+ * Calculate next dimensions and positions of images;
  * Calculate and set new z-index on images;
- * Transform element to new values;
+ * Transform element with new values;
  */
 function animateSlides(direction, positions, images) {
     const n = positions.length;
 
-    for(let image of images){
+    for (let image of images) {
         const currIndex = Number(image.getAttribute('data-crs-curr-index'));
-        const originalIndex = Number(image.getAttribute('data-crs-org-index'));
         let nextIndex;
 
         if (direction === Directions.NEXT) {
@@ -60,21 +65,22 @@ function animateSlides(direction, positions, images) {
         } else if (direction === Directions.PREV) {
             nextIndex = (currIndex + 1) % n;
         }
-        
+
         // Using parent element to get it's wrapper that is always fixed, 
         // to calculate translate values relative to that fixed position
         const imageRect = image.parentElement.getBoundingClientRect();
         const nextPosRect = positions[nextIndex].getBoundingClientRect();
-                      
-     
+
+        //Set new width and height dimensions
         image.style.width = nextPosRect.width + 'px';
         image.style.height = nextPosRect.height + 'px';
 
-        
+        // Treanslate to new axis
         const newX = nextPosRect.left - imageRect.left;
         const newY = nextPosRect.top - imageRect.top;
         image.style.transform = `translateX(${newX}px) translateY(${newY}px)`
 
+        // Update index attribute
         image.setAttribute('data-crs-curr-index', nextIndex)
     }
 }
