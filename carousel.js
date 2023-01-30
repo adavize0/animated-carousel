@@ -4,36 +4,48 @@ const Directions = {
     NEXT: 'next'
 }
 
-// Set initial position index on images
+/**
+ * Set initial position index on images 
+ * Create placeholder positions for each element
+ */ 
 document.querySelectorAll('.crs-list').forEach(carousel => {
-    carousel.querySelectorAll('.crs-img-wrp').forEach((img, i) => {
+    
+    const images = carousel.querySelectorAll('.crs-img-wrp');
+    const placeHoldersWrapper = document.createElement('div');
+    placeHoldersWrapper.className = 'crs-place-holders-wrp';
+    placeHoldersWrapper.style.display = 'flex';
+
+    images.forEach((img, i) => {
         img.setAttribute('data-crs-curr-index', i)
         img.setAttribute('data-crs-org-index', i)
+        placeHoldersWrapper.innerHTML += `<div class="crs-position"> <div class="crs-position__inner"></div></div>`;
     })
+
+    carousel.insertAdjacentElement('afterend', placeHoldersWrapper)
 })
+
 
 // Add event listener on next and previous buttons
 document.querySelectorAll('.js-crs-ctrl').forEach(btn => {
     btn.addEventListener('click', () => {
         const direction = btn.getAttribute('data-crs-direction')
         const containerId = btn.getAttribute('aria-controls')
-        const slidesContainer = document.getElementById(containerId)
+        const carouselContainer = document.getElementById(containerId)
 
-        const positions = slidesContainer.querySelectorAll('.crs-position')
-        const images = slidesContainer.querySelectorAll('.crs-img-wrp')
+        const positions = carouselContainer.querySelectorAll('.crs-position')
+        const images = carouselContainer.querySelectorAll('.crs-img-wrp')
 
         animateSlides(direction, positions, images)
     })
 })
 
-// Animate stuff
+
 /**
- * ---Going right
- * Move the 1 to n-1 to +1 position;
- * Items before mid scale up;
- * Items after mid scale down
- * Move the last item to the first place
- * z-index
+ * Determine the direction;
+ * Calculate new positions of images;
+ * Calculate new scale of images;
+ * Calculate and set new z-index on images;
+ * Transform element to new values;
  */
 function animateSlides(direction, positions, images) {
     const n = positions.length;
@@ -48,19 +60,21 @@ function animateSlides(direction, positions, images) {
         } else if (direction === Directions.PREV) {
             nextIndex = (currIndex + 1) % n;
         }
-
-
         
-        const orgPos = positions[originalIndex].getBoundingClientRect();
+        // Using parent element to get it's wrapper that is always fixed, 
+        // to calculate translate values relative to that fixed position
+        const imageRect = image.parentElement.getBoundingClientRect();
         const nextPosRect = positions[nextIndex].getBoundingClientRect();
+                      
+     
+        image.style.width = nextPosRect.width + 'px';
+        image.style.height = nextPosRect.height + 'px';
+
         
-        const x = nextPosRect.left - orgPos.left;
-        image.style.transform = 'translateX(' + x + 'px)'
+        const newX = nextPosRect.left - imageRect.left;
+        const newY = nextPosRect.top - imageRect.top;
+        image.style.transform = `translateX(${newX}px) translateY(${newY}px)`
+
         image.setAttribute('data-crs-curr-index', nextIndex)
-
-        if(originalIndex == 0){
-            console.log({nextIndex, currIndex, originalIndex});
-
-        }
     }
 }

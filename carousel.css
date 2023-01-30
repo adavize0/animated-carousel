@@ -32,26 +32,55 @@ body {
   order: 1;
 }
 
-.crs-list {
-  list-style: none;
-  display: flex;
-  gap: -1px;
+.crs-layout-container {
+  position: relative;
+  overflow: hidden;
 }
 
-.crs-item {
-  height: 300px;
-  width: 100px;
+.crs-list {
+ width: 0;
+ height: 0;
+ top: 0;
+ left: 0;
+ background-color: green;
+ position: absolute;
+}
+
+.crs-position {
+  width: 220px;
   border: 1px solid white;
   border-radius: 3px;
 }
 
-.crs-img-wrp {
-  border: 1px solid blue;
-  height: inherit;
-  position: relative;
-  background-color: green;
-  transition-duration: 750ms;
+.crs-position__inner {
+  border: 1px solid white;
+  width: 100%;
+  padding-bottom: 150%;
 }
+
+
+/* This would definately break with more than 5 slides */
+.crs-position:nth-child(odd) {
+  transform: scale(0.6);
+}
+.crs-position:nth-child(even) {
+  transform: scale(0.79);
+}
+.crs-position:nth-child(3) {
+  transform: scale(1);
+}
+
+.crs-img-wrp {
+  top: 0;
+  left: 0;
+  position: absolute;
+  transition-duration: 450ms;
+  background-color: rgb(128, 210, 239);
+  height: 50px;
+  width: 50px;
+  transition-timing-function: ease-out;
+}
+
 
 .crs-img {
   position: absolute;
