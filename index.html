@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Animated Carousel</title>
+    <link rel="stylesheet" href="./carousel.css" />
+    <link rel="stylesheet" href="./utilities.css" />
+  </head>
+  <body>
+    <div class="body-inner u-flex-center">
+      <section class="crs-section">
+        <div class="crs-wrp u-d-flex u-ai-center">
+          <button
+            class="crs-ctrl-btn js-crs-ctrl crs-ctrl--prev u-circle u-bg-white"
+            data-crs-direction="previous"
+            aria-label="previous"
+            aria-controls="crs-list"
+          >
+            &larr;
+          </button>
+          <button
+            class="crs-ctrl-btn js-crs-ctrl crs-ctrl--next u-circle u-bg-white"
+            data-crs-direction="next"
+            aria-label="next"
+            aria-controls="crs-list"
+          >
+            &rarr;
+          </button>
+          <ul class="crs-list" id="crs-list">
+            <li class="crs-item crs-position">
+              <div class="crs-img-wrp">
+                1
+                <img src="crs-img" alt="image" />
+              </div>
+            </li>
+            <li class="crs-item crs-position">
+              <div class="crs-img-wrp">
+                2
+                <img src="crs-img" alt="image" />
+              </div>
+            </li>
+            <li class="crs-item crs-position">
+              <div class="crs-img-wrp">
+                3
+                <img src="crs-img" alt="image" />
+              </div>
+            </li>
+            <li class="crs-item crs-position">
+              <div class="crs-img-wrp">
+                4
+                <img src="crs-img" alt="image" />
+              </div>
+            </li>
+            <li class="crs-item crs-position">
+              <div class="crs-img-wrp">
+                5
+                <img src="crs-img" alt="image" />
+              </div>
+            </li>
+          </ul>
+        </div>
+      </section>
+    </div>
+
+    <script src="./carousel.js"></script>
+  </body>
+</html>

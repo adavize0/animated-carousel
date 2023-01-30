@@ -1,0 +1,42 @@
+button {
+    cursor: pointer;
+    border: none;
+}
+
+ul {
+    list-style-type: none;
+}
+
+.u-circle {
+    border-radius: 50%;
+}
+
+.u-bg-white {
+    background-color: white;
+}
+
+.u-d-flex {
+    display: flex;
+}
+
+.u-flex-row {
+    flex-direction: row;
+}
+
+.u-flex-col {
+    flex-direction: column;
+}
+
+.u-flex-center {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.u-ai-center {
+    align-items: center;
+}
+
+.u-jc-center {
+    justify-content: center;
+}
