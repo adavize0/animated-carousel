@@ -32,100 +32,100 @@ body {
   width: 40px;
   font-size: 1.5rem;
 }
-
+.crs-ctrl-btn > svg {
+  fill: black;
+}
 .crs-ctrl--next {
   order: 1;
 }
 
+/* Wraps both the images and position placeholders */
 .crs-layout-container {
   position: relative;
-  /* width: 80%; */
 }
 
+/* Semantic list of the images, contains the original images */
 .crs-list {
-  width: 0;
-  height: 0;
+  width: 20px;
+  height: 20px;
   top: 0;
-  left: 0;
-  background-color: green;
+  left: 50%;
   position: absolute;
   z-index: 45;
 }
 
+.crs-img-wrp {
+  position: absolute;
+  transform-origin: center;
+  transition-timing-function: ease-out;
+  transition-duration: 450ms;
+  overflow: hidden;
+
+  /* Slow motion */
+  /* transition-duration: 2s;
+  transition-timing-function: linear; */
+
+}
+
+.crs-img {
+  width: 100%;
+  height: 101%;
+}
+
+img {
+  max-width: 100%;
+  object-fit: cover;
+}
+img::-moz-selection {
+  background-color: transparent;
+  color: #000;
+}
+img::selection {
+  background-color: transparent;
+  color: #000;
+}
+
+/* Wraps all the placeholder/position rectangles */
+.crs-place-holders-wrp {
+  max-width: 957px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  font-size: 1rem;
+}
+
+/* An individual rectangle placeholder */
 .crs-position {
   position: relative;
-  width: 291px;
-  border: 1px solid white;
   border-radius: 1px;
   flex-shrink: 0;
 }
 
 .crs-position__inner {
-  border: 2px solid white;
-  transform-origin: center;
+  border: 0.125em solid white;
   width: 100%;
   padding-bottom: 146%;
 }
 
 /* This would definately break with more than 5 slides */
+/* But positioning of images would always? work regardless of how elements are positioned */
 .crs-position:nth-child(1) {
-  /* transform: translateX(0%) scale(0.6);
-  transform-origin: right; */
-  width: 174px;
-  margin-right: -38px;
+  width: 10.9375em;
+  margin-right: -2.375em;
 }
 .crs-position:nth-child(2) {
-  /* transform: translateX(0) scale(0.795); */
-  margin-right: -38px;
-  width: 232px;
+  margin-right: -2.375em;
+  width: 14.5em;
 }
 .crs-position:nth-child(3) {
-  /* transform: translateX(0) scale(1); */
-  width: 291px;
+  width: 18.1875em;
 }
 .crs-position:nth-child(4) {
-  /* transform: translateX(0) scale(0.795); */
-  width: 232px;
-  margin-left: -38px;
+  width: 14.5em;
+  margin-left: -2.375em;
 }
 .crs-position:nth-child(5) {
-  /* transform-origin: left;
-  transform: translateX(0) scale(0.6); */
-  width: 174px;
-  margin-left: -38px;
-}
-
-.crs-img-wrp {
-  top: 0;
-  left: 0;
-  position: absolute;
-  transition-duration: 450ms;
-  background-color: rgb(128, 210, 239);
-  height: 50px;
-  width: 50px;
-  transition-timing-function: ease-out;
-}
-
-.crs-img {
-  position: absolute;
-  left: 0;
-  top: 0;
-  width: 100%;
-  height: 100%;
-  display: block;
-  background-color: green;
-}
-
-.crs-place-holders-wrp {
-  max-width: 957px;
-  border: 1px solid rgb(244, 135, 135);
-  position: relative;
-  display: flex;
-  align-items: center;
-  width: 100%;
-}
-
-.crs-position {
-  left: 0;
-  /* position: absolute; */
+  width: 10.9375em;
+  margin-left: -2.375em;
 }

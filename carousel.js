@@ -1,3 +1,12 @@
+/**
+ * So the whole trick is having placeholder elements that represents the carousel layout
+ * and transforming the semantic(real images) images to the cordinates of the placeholder positions
+ * 
+ * of course, the placeholders appear behind the images
+ * 
+ * Checkout the Figma design by 
+ */
+
 
 const Directions = {
     PREV: 'previous',
@@ -43,8 +52,8 @@ function createPlaceHolders(container, n) {
     container.insertAdjacentElement('afterend', placeHoldersWrapper)
 }
 
-function arrangePlaceHolders(){
-    
+function arrangePlaceHolders() {
+
 }
 
 /**
@@ -55,6 +64,7 @@ function arrangePlaceHolders(){
  */
 function animateSlides(direction, positions, images) {
     const n = positions.length;
+    const midIndex = Math.ceil(n/2) - 1;
 
     for (let image of images) {
         const currIndex = Number(image.getAttribute('data-crs-curr-index'));
@@ -71,14 +81,30 @@ function animateSlides(direction, positions, images) {
         const imageRect = image.parentElement.getBoundingClientRect();
         const nextPosRect = positions[nextIndex].getBoundingClientRect();
 
-        //Set new width and height dimensions
-        image.style.width = nextPosRect.width + 'px';
-        image.style.height = nextPosRect.height + 'px';
-
         // Treanslate to new axis
         const newX = nextPosRect.left - imageRect.left;
         const newY = nextPosRect.top - imageRect.top;
         image.style.transform = `translateX(${newX}px) translateY(${newY}px)`
+
+        // Set z-index
+        /**
+         * Middle z index is higher than every other
+         * Overflowing element has the lowest z-index (because it translates behind all others)
+         */
+        const isLastElementGoingRight = nextIndex === 0 && direction == Directions.NEXT;
+        const isLastElementGoingLeft = nextIndex === n - 1 && direction == Directions.PREV
+        
+        if(isLastElementGoingLeft || isLastElementGoingRight) {
+            image.style.zIndex = "0"
+        }
+        else {
+            image.style.zIndex = midIndex - Math.abs(midIndex - nextIndex);
+        } 
+        //Set new width and height dimensions
+        image.style.width = nextPosRect.width + 'px';
+        image.style.height = nextPosRect.height + 'px';
+
+        
 
         // Update index attribute
         image.setAttribute('data-crs-curr-index', nextIndex)
