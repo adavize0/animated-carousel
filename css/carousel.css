@@ -4,10 +4,15 @@
   box-sizing: border-box;
 }
 
+:root {
+  font-size: 16px;
+}
+
 body {
   background-color: #100d10;
   min-height: 100vh;
   color: white;
+  font-family: Arial, Helvetica, sans-serif;
 }
 
 .body-inner {
@@ -32,6 +37,22 @@ body {
   height: 40px;
   width: 40px;
   font-size: 1.5rem;
+  transform-origin: center;
+}
+
+@keyframes btn-bounce {
+  0% {
+    scale: 1;
+  }
+  50% {
+    transform: scale(0.9);
+  }
+  100% {
+  transform: scale(1);
+  }
+}
+.crs-ctrl-btn:active {
+  animation: btn-bounce 200ms linear;
 }
 .crs-ctrl-btn > svg {
   fill: black;
@@ -59,11 +80,11 @@ body {
   position: absolute;
   transform-origin: center;
   transition-timing-function: ease;
-  transition-duration: 350ms;
+  /* transition-duration: 320ms; */
   overflow: hidden;
 
   /* Slow motion */
-  /* transition-duration: 2s;
+  /* transition-duration: 2s !important;
   transition-timing-function: linear; */
 
 }

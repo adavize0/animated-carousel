@@ -5,9 +5,13 @@
  * 
  * Of course, the placeholders appear behind the images
  * 
- * Checkout the Figma designed prototype by: 
+ * Checkout the Figma designed prototype
+ * https://www.figma.com/file/8FXO9BkiIYR4BHTU2FAc5K/100-days-of-design?node-id=9%3A208&t=2R9nNsLrbqYz0Ab1-0
+ * 
+ * Designed by Twitter @Design_Baddie
  */
 
+const CrsTransitionDuration = 320;
 
 const Directions = {
     PREV: 'previous',
@@ -26,7 +30,7 @@ const carouselsDimensionsCache = {};
  */
 function initializeCarousels() {
     const carousels = document.querySelectorAll('.crs-layout-container');
-
+    
     for (let crs of carousels) {
         const images = crs.querySelectorAll('.crs-img-wrp');
         const slideList = crs.querySelector('.crs-list')
@@ -36,6 +40,7 @@ function initializeCarousels() {
         images.forEach((img, i) => {
             img.setAttribute('data-crs-curr-index', i);
             img.setAttribute('data-crs-original-index', i);
+            img.style.transitionDuration = CrsTransitionDuration + 'ms';
         })
 
         /**Make and append placeholders */
@@ -153,18 +158,17 @@ function animateSlides(direction, images, containerId) {
         // Update attributes, accessibility focus too
         image.setAttribute('data-crs-curr-index', nextIndex)
     }
-
-
-
-
 }
 
-function windowResizeEventHandler() {
-    console.log(9)
+const windowResizeEventHandler = debounce(function(){
     calcAndCacheDimensions();
-}
+}, 100) 
 
 window.addEventListener('resize', windowResizeEventHandler);
+
+const animateWithThrottle = throttle(function(...args){
+    animateSlides(...args)
+}, 0.9 * CrsTransitionDuration)
 
 // Add event listener on next and previous buttons
 document.querySelectorAll('.js-crs-ctrl').forEach(btn => {
@@ -175,7 +179,9 @@ document.querySelectorAll('.js-crs-ctrl').forEach(btn => {
 
         const images = carouselContainer.querySelectorAll('.crs-img-wrp')
 
-        animateSlides(direction, images, containerId)
+
+
+        animateWithThrottle(direction, images, containerId)
     })
 })
 
