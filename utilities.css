@@ -1,42 +1,64 @@
+@media (prefers-reduced-motion: reduce) {
+  *:not(.safe-animation),
+  *:not(.safe-animation)::before,
+  *:not(.safe-animation)::after {
+    animation-duration: 0.01s !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0s !important;
+    scroll-behavior: auto !important;
+    opacity: 1 !important;
+  }
+}
+
+.visually-hidden:not(:focus):not(:active) {
+  /* clip: rect(0 0 0 0);
+  clip-path: inset(50%);
+  height: 1px;
+  overflow: hidden;
+  position: absolute;
+  white-space: nowrap;
+  width: 1px; */
+}
+
 button {
-    cursor: pointer;
-    border: none;
+  cursor: pointer;
+  border: none;
 }
 
 ul {
-    list-style-type: none;
+  list-style-type: none;
 }
 
 .u-circle {
-    border-radius: 50%;
+  border-radius: 50%;
 }
 
 .u-bg-white {
-    background-color: white;
+  background-color: white;
 }
 
 .u-d-flex {
-    display: flex;
+  display: flex;
 }
 
 .u-flex-row {
-    flex-direction: row;
+  flex-direction: row;
 }
 
 .u-flex-col {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .u-flex-center {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .u-ai-center {
-    align-items: center;
+  align-items: center;
 }
 
 .u-jc-center {
-    justify-content: center;
+  justify-content: center;
 }

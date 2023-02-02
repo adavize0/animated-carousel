@@ -28,7 +28,6 @@ function initializeCarousels() {
     const carousels = document.querySelectorAll('.crs-layout-container');
 
     for (let crs of carousels) {
-        const carouselId = crs.getAttribute('id');
         const images = crs.querySelectorAll('.crs-img-wrp');
         const slideList = crs.querySelector('.crs-list')
         const n = images.length;
@@ -44,6 +43,7 @@ function initializeCarousels() {
         const placeholderMarkup = `<div class="crs-position"> <div class="crs-position__inner"></div></div>`
 
         placeholdersWrapper.className = 'crs-placeholders-wrp';
+        placeholdersWrapper.setAttribute('role', 'presentation')
         placeholdersWrapper.innerHTML += placeholderMarkup.repeat(n)
         slideList.insertAdjacentElement('afterend', placeholdersWrapper)
     }
@@ -93,6 +93,7 @@ function calcAndCacheDimensions(carousels) {
  * Update image index var
  */
 function animateSlides(direction, images, containerId) {
+    const container = document.getElementById(containerId);
     const n = images.length;
     const midIndex = Math.ceil(n / 2) - 1;
 
@@ -108,6 +109,18 @@ function animateSlides(direction, images, containerId) {
             nextIndex = (currIndex - 1 + n) % n;
         } else if (direction === Directions.PREV) {
             nextIndex = (currIndex + 1) % n;
+        }
+
+        // Update live region text for screen readers (middle side is current active slide)
+        const liveReg = container.querySelector('.live-region');
+        if (liveReg && nextIndex === midIndex) {
+            let i;
+            if(originalIndex >= midIndex){
+                i = originalIndex - midIndex + 1;
+            } else {
+                i = n + originalIndex - 1;
+            }
+            liveReg.textContent = `Slide ${i} of ${n}`
         }
 
         /**
@@ -137,12 +150,17 @@ function animateSlides(direction, images, containerId) {
         image.style.width = nextPosRect.width + 'px';
         image.style.height = nextPosRect.height + 'px';
 
-        // Update index attribute
+        // Update attributes, accessibility focus too
         image.setAttribute('data-crs-curr-index', nextIndex)
     }
+
+
+
+
 }
 
 function windowResizeEventHandler() {
+    console.log(9)
     calcAndCacheDimensions();
 }
 

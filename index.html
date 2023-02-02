@@ -5,17 +5,17 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Animated Carousel</title>
-    <link rel="stylesheet" href="./carousel.css" />
     <link rel="stylesheet" href="./utilities.css" />
+    <link rel="stylesheet" href="./carousel.css" />
   </head>
   <body>
     <div class="body-inner u-flex-center">
-      <section class="crs-section">
+      <section class="crs-section" aria-label="pictures carousel">
         <div class="crs-wrp u-flex-center">
           <button
             class="crs-ctrl-btn js-crs-ctrl crs-ctrl--prev u-circle u-bg-white"
             data-crs-direction="previous"
-            aria-label="previous"
+            aria-label="previous item"
             aria-controls="crs-1"
           >
             <svg role="presentation" width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -26,14 +26,14 @@
           <button
             class="crs-ctrl-btn js-crs-ctrl crs-ctrl--next u-circle u-bg-white"
             data-crs-direction="next"
-            aria-label="next"
+            aria-label="next item"
             aria-controls="crs-1"
           >
             <svg width="16" height="15" viewBox="0 0 16 15" fill="none" xmlns="http://www.w3.org/2000/svg">
               <path d="M14.6 8.577L9.4 13.777C9.03333 14.1437 8.56667 14.327 8 14.327C7.43333 14.327 6.96667 14.1437 6.6 13.777C6.23333 13.4103 6.04133 12.9523 6.024 12.403C6.008 11.8523 6.18333 11.3937 6.55 11.027L8.4 9.177H2C1.43333 9.177 0.958667 8.985 0.576 8.601C0.192 8.21834 0 7.74367 0 7.177C0 6.61034 0.183333 6.135 0.549999 5.751C0.916666 5.36834 1.38333 5.177 1.95 5.177H8.4L6.6 3.377C6.23333 3.01034 6.05 2.54367 6.05 1.977C6.05 1.41034 6.23333 0.94367 6.6 0.577004C6.96667 0.210337 7.42533 0.0183368 7.976 0.00100348C8.52533 -0.0149965 8.98333 0.160338 9.35 0.527004L14.6 5.777C14.9667 6.14367 15.15 6.61034 15.15 7.177C15.15 7.74367 14.9667 8.21034 14.6 8.577Z" fill="black"/>
             </svg>            
           </button>
-          <div id="crs-1" aria-label="carousel" class="crs-layout-container">
+          <div id="crs-1" role="figure" aria-label="carousel slides" class="crs-layout-container">
             <ul class="crs-list">
               <li class="crs-item">
                 <div class="crs-img-wrp">
@@ -61,6 +61,7 @@
                 </div>
               </li>
             </ul>
+            <div class="live-region visually-hidden" aria-live="polite" aria-atomic="true"></div>
           </div>
         </div>
       </section>

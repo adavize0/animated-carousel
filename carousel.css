@@ -7,6 +7,7 @@
 body {
   background-color: #100d10;
   min-height: 100vh;
+  color: white;
 }
 
 .body-inner {
@@ -21,8 +22,8 @@ body {
 
 .crs-wrp {
   margin: auto;
+  width: fit-content;
   gap: 58px;
-  /* width: fit-content; */
 }
 
 .crs-ctrl-btn {
@@ -128,4 +129,72 @@ img::selection {
 .crs-position:nth-child(5) {
   width: 10.9375em;
   margin-left: -2.375em;
+}
+
+.live-region {
+  margin-top: 40px;
+  text-align: center;
+}
+
+@media only screen and (max-width: 1200px) {
+  .crs-wrp {
+    gap: 30px;
+  }
+  .crs-placeholders-wrp {
+    font-size: 1.3vw;
+  }
+
+}
+
+@media only screen and (max-width: 850px) {
+  .crs-placeholders-wrp {
+    font-size: 1.5vw;
+  }
+  /* Change layout for mobile-ish */
+  .crs-wrp {
+    display: grid;
+    grid-template-columns: auto auto;
+    row-gap: 40px;
+    column-gap: 30px;
+  }
+  .crs-layout-container {
+    grid-column-start: 1;
+    grid-column-end: -1;
+  }
+  .crs-ctrl--next {
+    order: initial;
+    justify-self: start;
+  }
+  .crs-ctrl--prev {
+    order: initial;
+    justify-self: end;
+  }
+
+  /* Welp, manually positioning the layout again */
+  .crs-position:nth-child(1) {
+    width: 10.9375em;
+    margin-right: -8em;
+  }
+  .crs-position:nth-child(2) {
+    margin-right: -12em;
+    width: 18em;
+  }
+  .crs-position:nth-child(3) {
+    width: 25em;
+  }
+  .crs-position:nth-child(4) {
+    width: 20em;
+    margin-left: -12em;
+  }
+  .crs-position:nth-child(5) {
+    width: 10.9375em;
+    margin-left: -8em;
+  }
+  
+}
+
+@media only screen and (max-width: 650px){
+  .crs-placeholders-wrp {
+    font-size: 2vw;
+  }
 }
