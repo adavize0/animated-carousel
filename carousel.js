@@ -112,7 +112,7 @@ function animateSlides(direction, images, containerId) {
         }
 
         // Update live region text for screen readers (middle side is current active slide)
-        const liveReg = container.querySelector('.live-region');
+        const liveReg = container.querySelector('.js-live-region');
         if (liveReg && nextIndex === midIndex) {
             let i;
             if(originalIndex >= midIndex){
