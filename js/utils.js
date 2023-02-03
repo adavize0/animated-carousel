@@ -37,3 +37,9 @@ function throttle(cb, delay = 1000){
         setTimeout(timeoutFunc, delay)
     }
 }
+
+function isTouchDevice() {
+    return (('ontouchstart' in window) ||
+       (navigator.maxTouchPoints > 0) ||
+       (navigator.msMaxTouchPoints > 0));
+  }

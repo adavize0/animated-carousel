@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+    -webkit-tap-highlight-color: transparent;
+  }
+  
+  :root {
+    font-size: 16px;
+  }
+  
+  body {
+    background-color: #100d10;
+    min-height: 100vh;
+    color: white;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .body-inner {
+    min-height: 100vh;
+  }
+
+.toast-outlet {
+  opacity: 0;
+  transition: opacity 400ms ease-in-out;
+}
+
+.toast-outlet.active {
+  opacity: 1;
+  padding: 8px 15px;
+  min-height: 50px;
+  width: 98%;
+  max-width: 500px;
+  position: absolute;
+  border-radius: 4px;
+  left: 50%;
+  transform: translateX(-50%);
+  top: 30px;
+  text-align: center;
+  background-color: rgb(9, 108, 255);
+  color: white;
+
+  padding: 2px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
