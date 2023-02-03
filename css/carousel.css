@@ -179,6 +179,7 @@ img::selection {
     column-gap: 30px;
   }
   .crs-layout-container {
+    grid-row-start: 1;
     grid-column-start: 1;
     grid-column-end: -1;
   }
