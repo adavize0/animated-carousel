@@ -30,7 +30,7 @@ const carouselsDimensionsCache = {};
  */
 function initializeCarousels() {
     const carousels = document.querySelectorAll('.crs-layout-container');
-    
+
     for (let crs of carousels) {
         const images = crs.querySelectorAll('.crs-img-wrp');
         const slideList = crs.querySelector('.crs-list')
@@ -86,7 +86,7 @@ function calcAndCacheDimensions(carousels) {
             placeholders: placeholderDimensionsArray
         };
 
-        animateSlides(Directions.STATIC, images, carouselId)
+        animateSlides(Directions.STATIC, carouselId)
     }
 }
 
@@ -97,8 +97,9 @@ function calcAndCacheDimensions(carousels) {
  * Transform element with new values;
  * Update image index var
  */
-function animateSlides(direction, images, containerId) {
+function animateSlides(direction, containerId) {
     const container = document.getElementById(containerId);
+    const images = container.querySelectorAll('.crs-img-wrp')
     const n = images.length;
     const midIndex = Math.ceil(n / 2) - 1;
 
@@ -120,7 +121,7 @@ function animateSlides(direction, images, containerId) {
         const liveReg = container.querySelector('.js-live-region');
         if (liveReg && nextIndex === midIndex) {
             let i;
-            if(originalIndex >= midIndex){
+            if (originalIndex >= midIndex) {
                 i = originalIndex - midIndex + 1;
             } else {
                 i = n + originalIndex - 1;
@@ -160,29 +161,57 @@ function animateSlides(direction, images, containerId) {
     }
 }
 
-const windowResizeEventHandler = debounce(function(){
+const windowResizeEventHandler = debounce(function () {
     calcAndCacheDimensions();
-}, 100) 
+}, 35)
 
 window.addEventListener('resize', windowResizeEventHandler);
 
-const animateWithThrottle = throttle(function(...args){
+const animateWithThrottle = throttle(function (...args) {
     animateSlides(...args)
 }, 0.9 * CrsTransitionDuration)
 
 // Add event listener on next and previous buttons
 document.querySelectorAll('.js-crs-ctrl').forEach(btn => {
     btn.addEventListener('click', () => {
-        const direction = btn.getAttribute('data-crs-direction')
-        const containerId = btn.getAttribute('aria-controls')
-        const carouselContainer = document.getElementById(containerId)
-
-        const images = carouselContainer.querySelectorAll('.crs-img-wrp')
-
-
-
-        animateWithThrottle(direction, images, containerId)
+        const direction = btn.getAttribute('data-crs-direction');
+        const containerId = btn.getAttribute('aria-controls');
+        animateWithThrottle(direction, containerId)
     })
 })
+
+// Register swipe event listener for touch devices
+function checkXSwipeDirection(startX, endX) {
+
+    // No direction for taps
+    if(Math.abs(endX - startX) < 10){
+        return Directions.STATIC;
+    }
+
+    if (startX < endX) return Directions.PREV;
+    else if (startX > endX) return Directions.NEXT;
+    else return Directions.STATIC
+}
+
+document.querySelectorAll('.crs-wrp').forEach(function (wrp) {
+
+    const carouselId = wrp.getAttribute('data-crs-id');
+
+
+    wrp.addEventListener('touchstart', function (e) {
+        const touchstartX = e.changedTouches[0].screenX;
+
+        function touchEndFunc(e) {
+            const touchendX = e.changedTouches[0].screenX
+            const direction = checkXSwipeDirection(touchstartX, touchendX);
+
+            animateSlides(direction, carouselId)
+            wrp.removeEventListener('touchend', touchEndFunc)
+        }
+
+        wrp.addEventListener('touchend', touchEndFunc)
+    })
+})
+
 
 initializeCarousels();
